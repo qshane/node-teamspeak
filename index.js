@@ -140,6 +140,11 @@ function TeamSpeakClient(host, port){
 			self.emit("timeout");
 		});
 	};
+
+	TeamSpeakClient.prototype.close = function() {
+		socket.end();
+		socket.destroy();
+	};
 	
 	socket.on("error", function(err){
 		self.emit("error", err);
@@ -164,6 +169,12 @@ function TeamSpeakClient(host, port){
 			// - "error id=XX msg=YY". ID is zero if command was executed successfully.
 			var response = undefined;
 			if(s.indexOf("error") === 0){
+				if (executing === null) {
+					socket.end();
+					socket.destroy();
+					return;
+				}
+
 				response = parseResponse(s.substr("error ".length).trim());
 				executing.error = response;
 				if(executing.error.id === 0) delete executing.error;
