@@ -141,7 +141,7 @@ function TeamSpeakClient(host, port){
 		});
 	};
 
-	TeamSpeakClient.prototype.close = function() {
+	this.close = function() {
 		socket.end();
 		socket.destroy();
 	};
