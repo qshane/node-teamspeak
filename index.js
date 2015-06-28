@@ -87,20 +87,20 @@ function TeamSpeakClient(host, port){
 	// Return pending commands that are going to be sent to the server.
 	// Note that they have been parsed - Access getPending()[0].text to get
 	// the full text representation of the command.
-	TeamSpeakClient.prototype.getPending = function(){
+	this.getPending = function(){
 		return queue.slice(0);
 	};
 	
 	// Clear the queue of pending commands so that any command that is currently queued won't be executed.
 	// The old queue is returned.
-	TeamSpeakClient.prototype.clearPending = function(){
+	this.clearPending = function(){
 		var q = queue;
 		queue = [];
 		return q;
 	};
 	
 	// Send a command to the server
-	TeamSpeakClient.prototype.send = function(){
+	this.send = function(){
 		var args = Array.prototype.slice.call(arguments);
 		var options = [], params = {};
 		var callback = undefined;
@@ -134,7 +134,7 @@ function TeamSpeakClient(host, port){
 	};
 
 	// SetTimeout function
-	TeamSpeakClient.prototype.setTimeout = function(time) {
+	this.setTimeout = function(time) {
 		socket.setTimeout(time || 60000, function() {
 			socket.destroy();
 			self.emit("timeout");
